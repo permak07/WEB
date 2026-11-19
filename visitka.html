@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>4.1. Конструктор визиток</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            background-color: #d9d9d9;
+        }
+
+        .layout {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+
+        /* ---- панель настроек ---- */
+        .panel {
+            background-color: #ffffff;
+            padding: 25px;
+            width: 360px;
+        }
+
+        .panel h2 {
+            margin: 0 0 20px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .panel label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .panel input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 5px 6px;
+            margin-bottom: 10px;
+            border: 1px solid #bbb;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        .panel .row {
+            margin-bottom: 12px;
+        }
+
+        /* цветные кружки */
+        .circle {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-right: 3px;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+        }
+
+        .circle.selected {
+            border-color: #333333;
+        }
+
+        /* кнопки выравнивания и размера */
+        .mini-btn {
+            padding: 2px 6px;
+            margin-right: 3px;
+            border: 1px solid #cccccc;
+            background-color: #ffffff;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .mini-btn.selected {
+            background-color: #e0e0e0;
+        }
+
+        #add-phone {
+            font-size: 12px;
+            color: #555555;
+            cursor: pointer;
+        }
+
+        #apply-btn {
+            padding: 8px 22px;
+            background-color: #2196f3;
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* ---- сама визитка ---- */
+        #card {
+            width: 420px;
+            background-color: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            padding: 25px 30px 35px 30px;
+            box-sizing: border-box;
+        }
+
+        #card .org {
+            font-size: 12px;
+            color: #333333;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        #card .name {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        #card .position {
+            color: #555555;
+            margin-bottom: 22px;
+        }
+
+        #card .contact {
+            font-size: 13px;
+            color: #333333;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <div class="layout">
+
+        <div class="panel">
+            <h2>Конструктор визиток</h2>
+
+            <label>Наименование организации</label>
+            <input type="text" id="org" value='ООО "Ориентир"'>
+
+            <label>Фамилия, имя, отчество</label>
+            <input type="text" id="fio" value="Фёдоров Иван Семёнович">
+
+            <div class="row" id="name-colors">
+                <span class="circle selected" style="background-color:#000000" onclick="pickColor(this, 'name')"></span>
+                <span class="circle" style="background-color:#2196f3" onclick="pickColor(this, 'name')"></span>
+                <span class="circle" style="background-color:#f44336" onclick="pickColor(this, 'name')"></span>
+                <span class="circle" style="background-color:#4caf50" onclick="pickColor(this, 'name')"></span>
+                <span class="circle" style="background-color:#ff9800" onclick="pickColor(this, 'name')"></span>
+                <span class="circle" style="background-color:#e91e63" onclick="pickColor(this, 'name')"></span>
+            </div>
+
+            <div class="row" id="name-aligns">
+                <button class="mini-btn selected" onclick="pickAlign(this, 'name')">лево</button>
+                <button class="mini-btn" onclick="pickAlign(this, 'name')">центр</button>
+                <button class="mini-btn" onclick="pickAlign(this, 'name')">право</button>
+            </div>
+
+            <div class="row" id="name-sizes">
+                <button class="mini-btn selected" onclick="pickSize(this, 'name')">24px</button>
+                <button class="mini-btn" onclick="pickSize(this, 'name')">26px</button>
+                <button class="mini-btn" onclick="pickSize(this, 'name')">28px</button>
+            </div>
+
+            <label>Должность</label>
+            <input type="text" id="position" value="Менеджер по развитию">
+
+            <div class="row" id="position-colors">
+                <span class="circle selected" style="background-color:#000000" onclick="pickColor(this, 'position')"></span>
+                <span class="circle" style="background-color:#333333" onclick="pickColor(this, 'position')"></span>
+                <span class="circle" style="background-color:#666666" onclick="pickColor(this, 'position')"></span>
+                <span class="circle" style="background-color:#999999" onclick="pickColor(this, 'position')"></span>
+                <span class="circle" style="background-color:#bbbbbb" onclick="pickColor(this, 'position')"></span>
+                <span class="circle" style="background-color:#dddddd" onclick="pickColor(this, 'position')"></span>
+            </div>
+
+            <div class="row" id="position-aligns">
+                <button class="mini-btn selected" onclick="pickAlign(this, 'position')">лево</button>
+                <button class="mini-btn" onclick="pickAlign(this, 'position')">центр</button>
+                <button class="mini-btn" onclick="pickAlign(this, 'position')">право</button>
+            </div>
+
+            <div class="row" id="position-sizes">
+                <button class="mini-btn selected" onclick="pickSize(this, 'position')">14px</button>
+                <button class="mini-btn" onclick="pickSize(this, 'position')">16px</button>
+                <button class="mini-btn" onclick="pickSize(this, 'position')">18px</button>
+            </div>
+
+            <label>Телефон</label>
+            <div id="phones">
+                <input type="text" class="phone" value="8 (999) 123-45-67">
+            </div>
+            <p id="add-phone" onclick="addPhone()">+ Добавить ещё один телефон</p>
+
+            <label>E-mail</label>
+            <input type="text" id="email" value="fedorov.is@orientir.org">
+            <div class="row">
+                <input type="checkbox" id="show-email" checked>
+                <label for="show-email" style="display:inline">Отображать</label>
+            </div>
+
+            <label>Адрес</label>
+            <input type="text" id="address" value="Иркутск, Байкальская, 421, оф. 12">
+            <div class="row">
+                <input type="checkbox" id="show-address" checked>
+                <label for="show-address" style="display:inline">Отображать</label>
+            </div>
+
+            <button id="apply-btn" onclick="applyCard()">Применить</button>
+        </div>
+
+        <div id="card"></div>
+
+    </div>
+
+    <script>
+        // выбранные настройки ФИО
+        let nameColor="#000000";
+        let nameAlign="left";
+        let nameSize="24px";
+
+        // выбранные настройки должности
+        let posColor="#000000";
+        let posAlign="left";
+        let posSize="14px";
+
+        // выбирает цвет — снимает выделение с кружков в своей строке
+        function pickColor(el, field){
+            let row=el.parentElement;
+            let circles=row.children;
+            for (let i=0;i<circles.length;i++){
+                circles[i].className="circle";
+            }
+            el.className="circle selected";
+
+            let color=el.style.backgroundColor;
+            if (field==="name"){
+                nameColor=color;
+            } else {
+                posColor=color;
+            }
+        }
+
+        // выбирает выравнивание
+        function pickAlign(el, field){
+            let row=el.parentElement;
+            let btns=row.children;
+            for (let i=0;i<btns.length;i++){
+                btns[i].className="mini-btn";
+            }
+            el.className="mini-btn selected";
+
+            let align=el.innerText;
+            if (align==="лево") align="left";
+            if (align==="центр") align="center";
+            if (align==="право") align="right";
+
+            if (field==="name"){
+                nameAlign=align;
+            } else {
+                posAlign=align;
+            }
+        }
+
+        // выбирает размер
+        function pickSize(el, field){
+            let row=el.parentElement;
+            let btns=row.children;
+            for (let i=0;i<btns.length;i++){
+                btns[i].className="mini-btn";
+            }
+            el.className="mini-btn selected";
+
+            let size=el.innerText;
+            if (field==="name"){
+                nameSize=size;
+            } else {
+                posSize=size;
+            }
+        }
+
+        // добавляет поле для ещё одного телефона
+        function addPhone(){
+            let phones=document.getElementById("phones");
+            phones.innerHTML+='<input type="text" class="phone" placeholder="Телефон">';
+        }
+
+        // применяет данные из панели к макету визитки
+        function applyCard(){
+            let org=document.getElementById("org").value;
+            let fio=document.getElementById("fio").value;
+            let position=document.getElementById("position").value;
+            let email=document.getElementById("email").value;
+            let address=document.getElementById("address").value;
+
+            let showEmail=document.getElementById("show-email").checked;
+            let showAddress=document.getElementById("show-address").checked;
+
+            // собирает визитку
+            let card='<div class="org">'+org+'</div>';
+            card+='<div class="name" style="color:'+nameColor+'; text-align:'+nameAlign+'; font-size:'+nameSize+'">'+fio+'</div>';
+            card+='<div class="position" style="color:'+posColor+'; text-align:'+posAlign+'; font-size:'+posSize+'">'+position+'</div>';
+
+            // выводит все телефоны
+            let phoneInputs=document.getElementById("phones").children;
+            for (let i=0;i<phoneInputs.length;i++){
+                let val=phoneInputs[i].value;
+                if (val!==""){
+                    card+='<div class="contact">'+val+'</div>';
+                }
+            }
+
+            if (showEmail){
+                card+='<div class="contact">'+email+'</div>';
+            }
+            if (showAddress){
+                card+='<div class="contact">'+address+'</div>';
+            }
+
+            // выводит визитку на страницу
+            document.getElementById("card").innerHTML=card;
+        }
+
+        // показывает начальную визитку при загрузке страницы
+        applyCard();
+    </script>
+
+</body>
+</html>

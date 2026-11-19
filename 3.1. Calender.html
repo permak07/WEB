@@ -1,0 +1,117 @@
+
+<!-- saved from url=(0075)https://bki.matecdn.ru/-/22690fcb-d59a-4392-851d-975264bd2d86/task-3-1.html -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>3.1. Календарь</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            text-align: center;   
+        }
+
+        th, td {
+            border: 1px solid #999;
+            width: 45px;
+            height: 40px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .today {
+            background-color: #ffe082;
+            font-weight: bold;
+        }
+
+        .weekend {
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="title">Ноябрь 2026</h2>
+    <div id="calendar"><table><tbody><tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="weekend">Сб</th><th class="weekend">Вс</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="weekend">1</td></tr><tr><td class="today">2</td><td>3</td><td>4</td><td>5</td><td>6</td><td class="weekend">7</td><td class="weekend">8</td></tr><tr><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td class="weekend">14</td><td class="weekend">15</td></tr><tr><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td class="weekend">21</td><td class="weekend">22</td></tr><tr><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td class="weekend">28</td><td class="weekend">29</td></tr><tr><td>30</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+    <script>
+        function makeCalendar(){
+            let now=new Date();
+            let year=now.getFullYear();
+            let month=now.getMonth();
+            let today=now.getDate();
+
+            let months=[
+                "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+                "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+            ];
+            let days=["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+            // ставит название месяца и год в заголовок
+            document.getElementById("title").innerText=months[month]+" "+year;
+
+            // находит день недели первого числа (делает 0 для Пн и 6 для Вс)
+            let firstDay=new Date(year, month, 1).getDay();
+            firstDay=firstDay===0 ? 6 : firstDay-1;
+
+            // берет сколько всего дней в месяце
+            let lastDate=new Date(year, month+1, 0).getDate();
+
+            let table="<table><tr>";
+
+            // добавляет дни недели в шапку (выделяет выходные)
+            for (let i=0;i<days.length;i++){
+                let cls=(i===5 || i===6) ? " class='weekend'" : "";
+                table+="<th"+cls+">"+days[i]+"</th>";
+            }
+            table+="</tr><tr>";
+
+            // добавляет пустые ячейки до первого числа
+            for (let i=0;i<firstDay;i++){
+                table+="<td></td>";
+            }
+
+            let col=firstDay;
+
+            // заполняет числа месяца
+            for (let d=1;d<=lastDate;d++){
+                // переносит на новую строку, если неделя кончилась
+                if (col===7){
+                    table+="</tr><tr>";
+                    col=0;
+                }
+
+                // красит сегодня и выходные
+                let cls="";
+                if (d===today){
+                    cls="today";
+                } else if (col===5 || col===6){
+                    cls="weekend";
+                }
+
+                let classAttr=cls ? " class='"+cls+"'" : "";
+                table+="<td"+classAttr+">"+d+"</td>";
+                col++;
+            }
+
+            // добивает пустые ячейки в конце таблицы
+            while (col<7 && col!==0){
+                table+="<td></td>";
+                col++;
+            }
+
+            table+="</tr></table>";
+
+            // вставляет таблицу на страницу
+            document.getElementById("calendar").innerHTML=table;
+        }
+
+        makeCalendar();
+    </script>
+
+</body></html>
